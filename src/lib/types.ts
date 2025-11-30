@@ -61,6 +61,8 @@ export interface Establishment {
   address: EstablishmentAddress;
   openingHours: OpeningDay[];
   photos: string[];
+  totalVisits?: number;
+  averageRating?: number;
   createdAt: string;
   updatedAt: string;
 }

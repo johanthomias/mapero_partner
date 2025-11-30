@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { offersApi } from '@/lib/api';
-import type { Offer } from '@/lib/types';
 
 export function usePartnerOffer(id?: string) {
   return useQuery({
@@ -10,7 +9,7 @@ export function usePartnerOffer(id?: string) {
       if (!id) {
         throw new Error('Identifiant manquant');
       }
-      return offersApi.getOffer(id) as Promise<Offer>;
+      return offersApi.getOffer(id);
     },
   });
 }

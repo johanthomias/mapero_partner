@@ -154,7 +154,7 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
         <Field label="Type d’offre" error={form.formState.errors.type?.message}>
           <select
             {...form.register('type')}
-            className="h-12 rounded-2xl border border-white/10 bg-black/40 px-4 text-sm text-white"
+            className="h-12 rounded-2xl border border-white/10 px-4 text-sm text-text"
           >
             <option value="percentage">Réduction %</option>
             <option value="special">Offre spéciale</option>
@@ -172,7 +172,7 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
                 className="pr-10"
                 {...form.register('percentage', { valueAsNumber: true })}
               />
-              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-white/60">
+              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text/60">
                 %
               </span>
             </div>
@@ -198,7 +198,7 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
                 className="pr-10"
                 {...form.register('happyHourPrice', { valueAsNumber: true })}
               />
-              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-white/60">
+              <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-text/60">
                 €
               </span>
             </div>
@@ -208,7 +208,7 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
 
       <section className="grid gap-4 md:grid-cols-[1.2fr_0.8fr]">
         <div className="grid gap-3">
-          <label className="text-xs uppercase tracking-widest text-white/50">
+          <label className="text-xs uppercase tracking-widest text-text/50">
             Jours & créneaux
           </label>
           <Controller
@@ -222,19 +222,19 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
             )}
           />
           {scheduleMessage ? (
-            <p className="text-xs text-accent">{scheduleMessage}</p>
+            <p className="text-xs text-danger">{scheduleMessage}</p>
           ) : null}
         </div>
 
-        <div className="grid gap-3 rounded-3xl border border-white/10 bg-black/30 p-4">
-          <label className="text-xs uppercase tracking-widest text-white/50">Période</label>
+        <div className="grid gap-3 rounded-3xl border border-white/10 bg-card p-4">
+          <label className="text-xs uppercase tracking-widest text-text/50">Période</label>
           <Field label="Début" error={form.formState.errors.validity?.startDate?.message}>
             <Input type="date" {...form.register('validity.startDate')} />
           </Field>
           <Field label="Fin" error={form.formState.errors.validity?.endDate?.message}>
             <Input type="date" {...form.register('validity.endDate')} />
           </Field>
-          <label className="mt-2 flex items-center gap-2 text-xs text-white/70">
+          <label className="mt-2 flex items-center gap-2 text-xs text-text/70">
             <input
               type="checkbox"
               className="h-4 w-4 rounded border-white/30 bg-transparent text-primary"
@@ -263,9 +263,9 @@ function Field({
 }) {
   return (
     <div className="grid gap-2">
-      <label className="text-xs font-semibold uppercase tracking-wide text-white/60">{label}</label>
+      <label className="text-xs font-semibold uppercase tracking-wide text-text/60">{label}</label>
       {children}
-      {error ? <p className="text-xs text-accent">{error}</p> : null}
+      {error ? <p className="text-xs text-danger">{error}</p> : null}
     </div>
   );
 }

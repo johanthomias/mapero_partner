@@ -2,14 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
+@layer base {
+  :root {
+    color-scheme: light;
+    --color-primary: var(--theme-color-primary, #d92716);
+    --color-success: var(--theme-color-success, #1CC88A);
+    --color-warning: var(--theme-color-warning, #F6C23E);
+    --color-danger: var(--theme-color-danger, #6b1114);
+    --color-background: var(--theme-color-background, #F8F9FC);
+    --color-card: var(--theme-color-card, #FFFFFF);
+    --color-text: var(--theme-color-text, #1F2937);
+    --color-subtle-text: var(--theme-color-subtleText, #6B7280);
+    --color-border: var(--theme-color-border, #E5E7EB);
+
+    --radius-sm: var(--theme-radius-sm, 6px);
+    --radius-md: var(--theme-radius-md, 12px);
+    --radius-lg: var(--theme-radius-lg, 20px);
+
+    --shadow-card: var(--theme-shadow-card, 0 4px 16px rgba(0, 0, 0, 0.05));
+  }
 }
 
 body {
-  @apply bg-background text-white font-body antialiased;
+  @apply min-h-screen bg-background font-body text-text antialiased;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 a {
-  @apply text-primary underline-offset-4 transition hover:text-primary-light;
+  @apply text-primary underline-offset-4 transition hover:opacity-80;
 }

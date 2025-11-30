@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray, type FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -38,7 +38,9 @@ const establishmentSchema = z.object({
   photos: z.array(z.string().url('URL invalide')).min(1, 'Ajoutez au moins une photo'),
 });
 
-export type EstablishmentFormValues = z.infer<typeof establishmentSchema>;
+export type EstablishmentFormValues = z.infer<typeof establishmentSchema> & FieldValues;
+
+
 
 interface EstablishmentFormProps {
   defaultValues?: Partial<EstablishmentFormValues>;
@@ -74,10 +76,11 @@ const createDefaults = (values?: Partial<EstablishmentFormValues>): Establishmen
 });
 
 export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: EstablishmentFormProps) {
-  const form = useForm<EstablishmentFormValues>({
-    resolver: zodResolver(establishmentSchema),
-    defaultValues: createDefaults(defaultValues),
-  });
+const form = useForm<EstablishmentFormValues>({
+  resolver: zodResolver(establishmentSchema),
+  defaultValues: createDefaults(defaultValues) as EstablishmentFormValues,
+});
+
 
   useEffect(() => {
     if (defaultValues) {
@@ -85,10 +88,11 @@ export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: Establ
     }
   }, [defaultValues, form]);
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: 'photos',
-  });
+const { fields, append, remove } = useFieldArray<EstablishmentFormValues, 'photos'>({
+  control: form.control,
+  name: 'photos',
+});
+
 
   const handleSubmit = form.handleSubmit(async (values) => {
     await onSubmit(values);
@@ -148,10 +152,10 @@ export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: Establ
           {days.map((day) => {
             const closed = form.watch(`openingHours.${day.value}.closed`);
             return (
-              <div key={day.value} className="rounded-3xl border border-white/5 bg-black/30 p-4">
+              <div key={day.value} className="rounded-3xl border border-border bg-card p-4">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold text-white">{day.label}</span>
-                  <label className="flex items-center gap-2 text-xs text-white/60">
+                  <span className="font-semibold text-text">{day.label}</span>
+                  <label className="flex items-center gap-2 text-xs text-text/60">
                     <input
                       type="checkbox"
                       className="h-4 w-4 rounded border-white/30 bg-transparent text-primary"
@@ -173,7 +177,7 @@ export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: Establ
                   />
                 </div>
                 {form.formState.errors.openingHours?.[day.value]?.message ? (
-                  <p className="mt-2 text-xs text-accent">
+                  <p className="mt-2 text-xs text-danger">
                     {form.formState.errors.openingHours?.[day.value]?.message as string}
                   </p>
                 ) : null}
@@ -204,7 +208,7 @@ export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: Establ
             </div>
           ))}
           {form.formState.errors.photos ? (
-            <p className="text-xs text-accent">{form.formState.errors.photos.message}</p>
+            <p className="text-xs text-danger">{form.formState.errors.photos.message}</p>
           ) : null}
           <Button
             type="button"
@@ -227,8 +231,8 @@ export function EstablishmentForm({ defaultValues, onSubmit, isLoading }: Establ
 function SectionTitle({ title, description }: { title: string; description: string }) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest text-white/50">{title}</p>
-      <p className="text-sm text-white/60">{description}</p>
+      <p className="text-xs uppercase tracking-widest text-text/50">{title}</p>
+      <p className="text-sm text-text/60">{description}</p>
     </div>
   );
 }
@@ -236,9 +240,9 @@ function SectionTitle({ title, description }: { title: string; description: stri
 function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
   return (
     <div className="grid gap-2">
-      <label className="text-xs font-semibold uppercase tracking-wide text-white/60">{label}</label>
+      <label className="text-xs font-semibold uppercase tracking-wide text-text">{label}</label>
       {children}
-      {error ? <p className="text-xs text-accent">{error}</p> : null}
+      {error ? <p className="text-xs text-danger">{error}</p> : null}
     </div>
   );
 }

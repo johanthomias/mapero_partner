@@ -39,7 +39,9 @@ export const useAuthStore = create<AuthState>()(
           setAuthHeader(response.tokens.token);
           set({ user: response.user, tokens: response.tokens });
         } catch (error: any) {
-          set({ error: error?.message ?? 'Impossible de se connecter' });
+          set({
+            error: error?.response?.data?.message ?? error?.message ?? 'Impossible de se connecter',
+          });
           throw error;
         } finally {
           set({ isLoading: false });
@@ -52,7 +54,10 @@ export const useAuthStore = create<AuthState>()(
           setAuthHeader(response.tokens.token);
           set({ user: response.user, tokens: response.tokens });
         } catch (error: any) {
-          set({ error: error?.message ?? 'Impossible de créer le compte' });
+          set({
+            error:
+              error?.response?.data?.message ?? error?.message ?? 'Impossible de créer le compte',
+          });
           throw error;
         } finally {
           set({ isLoading: false });
@@ -66,7 +71,7 @@ export const useAuthStore = create<AuthState>()(
           const user = await authApi.me();
           set({ user });
         } catch (error: any) {
-          set({ error: error?.message ?? 'Session expirée' });
+          set({ error: error?.response?.data?.message ?? 'Session expirée' });
           setAuthHeader(undefined);
           set({ tokens: undefined, user: undefined });
         } finally {

@@ -43,7 +43,7 @@ export function InteractiveMap({ establishments, height = 260 }: InteractiveMapP
     establishments.forEach((establishment) => {
       const el = document.createElement('div');
       el.className =
-        'flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-primary text-xs font-bold text-white shadow-lg';
+        'flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-primary text-xs font-bold text-text shadow-lg';
       el.innerText = '€';
       markersRef.current.push(
         new mapboxgl.Marker(el)
@@ -72,7 +72,7 @@ export function InteractiveMap({ establishments, height = 260 }: InteractiveMapP
   if (!process.env.NEXT_PUBLIC_MAPBOX_TOKEN) {
     return (
       <div
-        className="flex items-center justify-center rounded-3xl border border-white/10 bg-black/40 text-sm text-white/60"
+        className="flex items-center justify-center rounded-3xl border border-white/10 text-sm text-text/60"
         style={{ height }}
       >
         Ajoutez un token Mapbox pour activer la carte interactive.

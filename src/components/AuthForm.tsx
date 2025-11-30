@@ -101,7 +101,7 @@ export function AuthForm({ mode, onSuccess }: AuthFormProps) {
             <Input placeholder="Le Comptoir du Canal" {...form.register('establishmentName')} />
           </Field>
 
-          <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/30 p-4 text-sm text-white/70">
+          <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-card p-4 text-sm text-text/70">
             <input
               type="checkbox"
               className="mt-1 h-4 w-4 rounded border-white/30 bg-transparent text-primary"
@@ -113,12 +113,12 @@ export function AuthForm({ mode, onSuccess }: AuthFormProps) {
             </span>
           </label>
           {form.formState.errors.acceptTerms ? (
-            <p className="text-xs text-accent">{form.formState.errors.acceptTerms.message}</p>
+            <p className="text-xs text-danger">{form.formState.errors.acceptTerms.message}</p>
           ) : null}
         </>
       ) : null}
 
-      {error ? <p className="text-sm text-accent">{error}</p> : null}
+      {error ? <p className="text-sm text-danger">{error}</p> : null}
 
       <Button type="submit" size="lg" disabled={isLoading}>
         {mode === 'login' ? 'Se connecter' : 'Créer mon espace'}
@@ -130,11 +130,11 @@ export function AuthForm({ mode, onSuccess }: AuthFormProps) {
 function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
   return (
     <div className="grid gap-2">
-      <label className="text-xs font-semibold uppercase tracking-wide text-white/60">
+      <label className="text-xs font-semibold uppercase tracking-wide text-text/60">
         {label}
       </label>
       {children}
-      {error ? <p className="text-xs text-accent">{error}</p> : null}
+      {error ? <p className="text-xs text-danger">{error}</p> : null}
     </div>
   );
 }

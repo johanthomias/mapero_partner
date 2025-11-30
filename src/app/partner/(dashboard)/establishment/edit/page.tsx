@@ -79,10 +79,7 @@ export default function EstablishmentEditPage() {
   const mutation = useMutation({
     mutationFn: async (values: EstablishmentFormValues) => {
       const payload = toApiPayload(values);
-      if (establishment?.id) {
-        return establishmentApi.updateEstablishment(establishment.id, payload);
-      }
-      return establishmentApi.createEstablishment(payload);
+      return establishmentApi.updateEstablishment(payload);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['partner-establishment'] });
@@ -92,11 +89,11 @@ export default function EstablishmentEditPage() {
 
   return (
     <div className="grid gap-8">
-      <Card className="rounded-3xl border-white/10 bg-black/40 p-6">
+      <Card className="rounded-3xl border-white/10 p-6">
         <div className="space-y-2">
-          <p className="text-xs uppercase tracking-widest text-white/50">Mon établissement</p>
-          <h1 className="text-2xl font-semibold text-white">Personnaliser ma fiche Mapéro</h1>
-          <p className="text-sm text-white/60">
+          <p className="text-xs uppercase tracking-widest text-subtleText">Mon établissement</p>
+          <h1 className="text-2xl font-semibold text-text">Personnaliser ma fiche Mapéro</h1>
+          <p className="text-sm text-subtleText">
             Ces informations sont visibles par les abonnés Mapéro dans l’app et alimentent
             l’algorithme de recommandation.
           </p>

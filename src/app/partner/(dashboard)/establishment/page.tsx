@@ -22,12 +22,12 @@ export default function PartnerEstablishmentPage() {
   const { data: establishment, isLoading } = usePartnerEstablishment();
 
   if (isLoading) {
-    return <div className="py-10 text-center text-white/70">Chargement de vos informations…</div>;
+    return <div className="py-10 text-center text-text/70">Chargement de vos informations…</div>;
   }
 
   if (!establishment) {
     return (
-      <Card className="grid gap-6 rounded-3xl border-white/10 bg-black/40 p-8 text-center text-white/70">
+      <Card className="grid gap-6 rounded-3xl border-white/10 p-8 text-center text-text/70">
         <p>Aucune fiche établissement n’est encore configurée.</p>
         <Button size="sm" className="mx-auto" onClick={() => router.push('/partner/establishment/edit')}>
           Créer ma fiche
@@ -47,8 +47,8 @@ export default function PartnerEstablishmentPage() {
     <div className="grid gap-8">
       <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-white">{establishment.name}</h1>
-          <p className="mt-2 flex items-center gap-2 text-sm text-white/70">
+          <h1 className="text-3xl font-semibold text-text">{establishment.name}</h1>
+          <p className="mt-2 flex items-center gap-2 text-sm text-text/70">
             <MapPin className="h-4 w-4" />
             {establishment.address.line1}, {establishment.address.postalCode}{' '}
             {establishment.address.city}
@@ -76,7 +76,7 @@ export default function PartnerEstablishmentPage() {
                 className="object-cover"
               />
             ) : (
-              <div className="flex h-full items-center justify-center gap-2 text-white/50">
+              <div className="flex h-full items-center justify-center gap-2 text-text/50">
                 <Camera className="h-6 w-6" />
                 Ajoutez une photo
               </div>
@@ -86,10 +86,10 @@ export default function PartnerEstablishmentPage() {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <Card className="grid gap-4 rounded-3xl border-white/10 bg-black/40 p-6 text-sm text-white/70">
-          <h2 className="text-lg font-semibold text-white">Informations</h2>
+        <Card className="grid gap-4 rounded-3xl border-white/10  p-6 text-sm text-text/70">
+          <h2 className="text-lg font-semibold text-text">Informations</h2>
           <p>{establishment.description}</p>
-          <div className="space-y-2 text-sm text-white/70">
+          <div className="space-y-2 text-sm text-text/70">
             <p className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
               {establishment.phone}
@@ -101,21 +101,21 @@ export default function PartnerEstablishmentPage() {
           </div>
         </Card>
 
-        <Card className="rounded-3xl border-white/10 bg-black/40 p-6 text-sm text-white/70">
-          <h2 className="text-lg font-semibold text-white">Horaires</h2>
+        <Card className="rounded-3xl border-white/10 p-6 text-sm text-text/70">
+          <h2 className="text-lg font-semibold text-text">Horaires</h2>
           <div className="mt-4 space-y-3">
             {orderedOpeningHours.map((day) => (
               <div key={day.day} className="flex items-center justify-between text-sm">
-                <span className="font-semibold text-white">{dayLabels[day.day]}</span>
+                <span className="font-semibold text-text">{dayLabels[day.day]}</span>
                 {day.slots.length ? (
-                  <span className="flex items-center gap-2 text-white/70">
-                    <Clock className="h-4 w-4 text-accent" />
+                  <span className="flex items-center gap-2 text-text/70">
+                    <Clock className="h-4 w-4 text-danger" />
                     {day.slots
                       .map((slot) => `${slot.open} → ${slot.close}`)
                       .join(' & ')}
                   </span>
                 ) : (
-                  <span className="text-white/40">Fermé</span>
+                  <span className="text-text/40">Fermé</span>
                 )}
               </div>
             ))}

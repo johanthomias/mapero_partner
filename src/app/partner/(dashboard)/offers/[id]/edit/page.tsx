@@ -50,15 +50,15 @@ export default function EditOfferPage({ params }: { params: { id: string } }) {
   });
 
   if (isLoading || !defaultValues) {
-    return <div className="py-10 text-center text-white/70">Chargement de l’offre…</div>;
+    return <div className="py-10 text-center text-text/70">Chargement de l’offre…</div>;
   }
 
   return (
     <div className="grid gap-8">
-      <Card className="rounded-3xl border-white/10 bg-black/40 p-6 text-white">
-        <p className="text-xs uppercase tracking-widest text-white/50">Modifier une offre</p>
+      <Card className="rounded-3xl border-white/10 p-6 text-text">
+        <p className="text-xs uppercase tracking-widest text-text/50">Modifier une offre</p>
         <h1 className="text-2xl font-semibold">{offer?.title}</h1>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-text/60">
           Ajustez votre promotion sans la dépublier, vos abonnés verront instantanément les
           changements.
         </p>

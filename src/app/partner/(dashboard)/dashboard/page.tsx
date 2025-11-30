@@ -1,84 +1,75 @@
 "use client";
 
+import { Sparkles, Users, Eye, TicketCheck } from 'lucide-react';
 import { usePartnerMetrics } from '@/hooks/use-partner-metrics';
-import { Card } from '@/components/ui/card';
-import { Sparkles, Users, Eye, TicketCheck, Activity } from 'lucide-react';
-import { StatsCard } from '@/components/StatsCard';
+import { usePartnerOffers } from '@/hooks/use-partner-offers';
+import { DashboardLayout } from '@/components/ui/dashboard/DashboardLayout';
+import { DashboardCard } from '@/components/ui/dashboard/DashboardCard';
+import { DashboardChart } from '@/components/ui/dashboard/DashboardChart';
+import { DashboardTable } from '@/components/ui/dashboard/DashboardTable';
 
 export default function PartnerDashboardPage() {
-  const { data: metrics, isLoading } = usePartnerMetrics();
+  const { data: metrics, isLoading: metricsLoading } = usePartnerMetrics();
+  const {
+    data: offers = [],
+    isLoading: offersLoading,
+  } = usePartnerOffers();
 
   const cards = [
     {
-      label: 'Visiteurs Mapéro',
-      value: metrics?.totalVisitors ?? '—',
+      title: 'Total visiteurs',
+      value: metrics?.totalVisitors?.toLocaleString('fr-FR') ?? '—',
       icon: Users,
-      helper: 'sur 7 jours',
-      trend: 8,
+      subtitle: '7 derniers jours',
+      trend: { label: '+8.5% vs hier', variant: 'positive' as const },
+      accent: 'primary' as const,
     },
     {
-      label: 'Offres actives',
-      value: metrics?.activeOffers ?? '—',
-      icon: Sparkles,
-      helper: 'Prêtes ce soir',
-    },
-    {
-      label: 'Offres vues',
-      value: metrics?.offersViewed ?? '—',
+      title: 'Offres vues',
+      value: metrics?.offersViewed?.toLocaleString('fr-FR') ?? '—',
       icon: Eye,
-      helper: 'vs semaine dernière',
-      trend: 12,
+      subtitle: 'Abonnés Mapéro',
+      trend: { label: '+12% vs semaine dernière', variant: 'positive' as const },
+      accent: 'warning' as const,
     },
     {
-      label: 'Offres utilisées',
-      value: metrics?.offersRedeemed ?? '—',
+      title: 'Offres utilisées',
+      value: metrics?.offersRedeemed?.toLocaleString('fr-FR') ?? '—',
       icon: TicketCheck,
-      helper: 'dans l’app',
-      trend: 5,
+      subtitle: 'Conversions récentes',
+      trend: { label: '+5% cette semaine', variant: 'positive' as const },
+      accent: 'success' as const,
+    },
+    {
+      title: 'Offres actives',
+      value: metrics?.activeOffers?.toString() ?? '—',
+      icon: Sparkles,
+      subtitle: 'Prêtes à être diffusées',
+      trend: { label: `${offers.length} au total`, variant: 'neutral' as const },
+      accent: 'danger' as const,
     },
   ];
+
   const trendPoints = metrics?.visitorsTrend ?? [];
-  const maxVisitors = trendPoints.reduce((acc, point) => Math.max(acc, point.value), 1);
 
   return (
-    <div className="grid gap-6">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold text-white">Tableau de bord</h1>
-        <p className="text-sm text-white/60">
-          Suivez l’impact de vos offres Mapéro en temps réel.
-        </p>
-      </header>
-
-      <section className="grid gap-4 md:grid-cols-2">
+    <DashboardLayout
+      title="Tableau de bord"
+      subtitle="Suivez l’impact de vos offres et ajustez vos créneaux creux en toute simplicité."
+    >
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {cards.map((card) => (
-          <StatsCard key={card.label} {...card} value={isLoading ? '—' : card.value} />
+          <DashboardCard key={card.title} {...card} isLoading={metricsLoading} />
         ))}
-      </section>
+      </div>
 
-      <Card className="rounded-3xl border-white/10 bg-black/30 p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/50">Flux de visites</p>
-            <h2 className="text-lg font-semibold text-white">Dernière semaine</h2>
-          </div>
-          <Activity className="h-5 w-5 text-accent" />
-        </div>
-        <div className="mt-6 flex items-end gap-3">
-          {trendPoints.map((point) => (
-            <div key={point.label} className="flex flex-1 flex-col items-center gap-2 text-xs text-white/60">
-              <div
-                className="w-full rounded-t-2xl bg-gradient-to-b from-primary to-primary/10"
-                style={{ height: `${Math.max((point.value / maxVisitors) * 160, 16)}px` }}
-              />
-              <span className="font-semibold">{point.label}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-6 text-sm text-white/60">
-          Créez une offre ciblée sur le créneau le plus bas pour lisser le trafic et maximiser vos
-          revenus apéritifs.
-        </p>
-      </Card>
-    </div>
+      <DashboardChart
+        title="Flux de visites"
+        subtitle="Vue consolidée sur 7 jours"
+        data={trendPoints}
+      />
+
+      <DashboardTable offers={offers} isLoading={offersLoading} />
+    </DashboardLayout>
   );
 }

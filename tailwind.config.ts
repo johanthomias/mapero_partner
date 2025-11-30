@@ -6,18 +6,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#FF5B2E',
-          dark: '#E04824',
-          light: '#FF8A66',
-        },
-        accent: '#FFCE3A',
-        background: '#0F0F0F',
+        primary: 'var(--color-primary)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        danger: 'var(--color-danger)',
+        background: 'var(--color-background)',
+        card: 'var(--color-card)',
+        text: 'var(--color-text)',
+        subtleText: 'var(--color-subtle-text)',
+        border: 'var(--color-border)',
       },
       borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
         xl: '1.5rem',
       },
       boxShadow: {
+        card: 'var(--shadow-card)',
         glow: '0 8px 30px rgba(255, 91, 46, 0.35)',
       },
       fontFamily: {

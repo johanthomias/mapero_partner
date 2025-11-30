@@ -13,8 +13,14 @@ export default function PartnerOffersPage() {
   const queryClient = useQueryClient();
   const { data: offers = [], isLoading } = usePartnerOffers();
 
+  const toPayload = (offer: Offer) => {
+    const { id, establishmentId, createdAt, updatedAt, ...rest } = offer;
+    return rest;
+  };
+
   const toggleMutation = useMutation({
-    mutationFn: async (offer: Offer) => offersApi.updateOffer(offer.id, { isActive: !offer.isActive }),
+    mutationFn: async (offer: Offer) =>
+      offersApi.updateOffer(offer.id, { ...toPayload(offer), isActive: !offer.isActive }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['partner-offers'] }),
   });
 
@@ -27,8 +33,8 @@ export default function PartnerOffersPage() {
     <div className="grid gap-6">
       <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-white">Mes offres Mapéro</h1>
-          <p className="text-sm text-white/60">
+          <h1 className="text-2xl font-semibold text-text">Mes offres Mapéro</h1>
+          <p className="text-sm text-text/60">
             Configurez vos réductions, offres spéciales et happy hours en quelques clics.
           </p>
         </div>

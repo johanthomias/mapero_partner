@@ -28,8 +28,8 @@ export function CalendarSelector({ value, onChange }: CalendarSelectorProps) {
   };
 
   return (
-    <div className="grid gap-4 rounded-3xl border border-white/10 bg-black/30 p-4">
-      <p className="text-xs uppercase tracking-widest text-white/50">Jours concernés</p>
+    <div className="grid gap-4 rounded-3xl border border-white/10 bg-card p-4">
+      <p className="text-xs uppercase tracking-widest text-text/50">Jours concernés</p>
       <div className="flex flex-wrap gap-2">
         {days.map((day) => {
           const isActive = value.days.includes(day.value);
@@ -40,8 +40,8 @@ export function CalendarSelector({ value, onChange }: CalendarSelectorProps) {
               onClick={() => toggleDay(day.value)}
               className={`flex h-10 w-10 items-center justify-center rounded-2xl border text-sm font-semibold ${
                 isActive
-                  ? 'border-primary bg-primary/20 text-white'
-                  : 'border-white/10 text-white/60 hover:text-white'
+                  ? 'border-primary bg-primary/20 text-text'
+                  : 'border-white/10 text-text/60 hover:text-text'
               }`}
             >
               {day.label}
@@ -50,7 +50,7 @@ export function CalendarSelector({ value, onChange }: CalendarSelectorProps) {
         })}
       </div>
 
-      <p className="text-xs uppercase tracking-widest text-white/50">Créneau</p>
+      <p className="text-xs uppercase tracking-widest text-text/50">Créneau</p>
       <div className="grid grid-cols-2 gap-3">
         <Input
           type="time"
@@ -68,7 +68,7 @@ export function CalendarSelector({ value, onChange }: CalendarSelectorProps) {
         type="button"
         variant="ghost"
         size="sm"
-        className="justify-center border border-dashed border-white/10 text-xs uppercase tracking-widest text-white/60"
+        className="justify-center border border-dashed border-white/10 text-xs uppercase tracking-widest text-text/60"
         onClick={() => onChange({ days: [], startTime: '17:00', endTime: '20:00' })}
       >
         Réinitialiser
