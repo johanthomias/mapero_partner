@@ -211,16 +211,19 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
           <label className="text-xs uppercase tracking-widest text-text/50">
             Jours & créneaux
           </label>
+
+          {/* ✅ La bonne façon : utiliser Controller */}
           <Controller
             control={form.control}
             name="schedule"
             render={({ field }) => (
               <CalendarSelector
-                value={field.value}
+                value={field.value ?? defaultSchedule} // 👈 fallback sécurisé
                 onChange={(schedule) => field.onChange(schedule)}
               />
             )}
           />
+
           {scheduleMessage ? (
             <p className="text-xs text-danger">{scheduleMessage}</p>
           ) : null}
@@ -244,6 +247,7 @@ export function OfferForm({ defaultValues, onSubmit, isLoading }: OfferFormProps
           </label>
         </div>
       </section>
+
 
       <Button type="submit" size="lg" disabled={isLoading}>
         {defaultValues ? 'Mettre à jour' : 'Publier l’offre'}

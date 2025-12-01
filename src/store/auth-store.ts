@@ -68,7 +68,7 @@ export const useAuthStore = create<AuthState>()(
         if (!tokens?.token) return;
         set({ isLoading: true });
         try {
-          const user = await authApi.me();
+          const user = await authApi.profile();
           set({ user });
         } catch (error: any) {
           set({ error: error?.response?.data?.message ?? 'Session expirée' });

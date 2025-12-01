@@ -27,7 +27,7 @@ export const authApi = {
   login: (payload: LoginPayload) =>
     unwrap<AuthResponse>(api.post<Envelope<AuthResponse>>('/auth/login', payload)),
   logout: () => unwrap<null>(api.post<Envelope<null>>('/auth/logout', {})),
-  me: () => unwrap<AuthResponse['user']>(api.get<Envelope<AuthResponse['user']>>('/auth/me')),
+  profile: () => unwrap<AuthResponse['user']>(api.get<Envelope<AuthResponse['user']>>('/auth/me')),
 };
 
 export type EstablishmentPayload = Omit<Establishment, 'id' | 'createdAt' | 'updatedAt'>;
